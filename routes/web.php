@@ -20,7 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
+
+require __DIR__.'/admin.php';
