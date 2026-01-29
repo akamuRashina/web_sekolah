@@ -2,9 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class gallerys extends Model
+class Gallery extends Model
 {
-    //
+    use HasFactory;
+
+    protected $table = 'gallerys';
+
+    protected $primaryKey = 'ID_Galeri';
+
+    protected $fillable = [
+        'Judul',
+        'Foto',
+        'Keterangan'
+    ];
 }

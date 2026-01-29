@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GalleryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,5 +23,12 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    /* ===== GALERI ===== */
+    Route::get('/gallery', [GalleryController::class, 'index']);
+    Route::post('/gallery', [GalleryController::class, 'store']);
+    Route::get('/gallery/{id}', [GalleryController::class, 'show']);
+    Route::put('/gallery/{id}', [GalleryController::class, 'update']);
+    Route::delete('/gallery/{id}', [GalleryController::class, 'destroy']);
 
 });
