@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TeacherController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,10 +21,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
+
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
+
+/*--routes teacher--*/
+Route::post('/teachers', [TeacherController::class, 'store']);
+Route::put('/teachers/{id}', [TeacherController::class, 'update']);
 
 require __DIR__.'/admin.php';
