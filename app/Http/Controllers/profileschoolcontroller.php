@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\App\Models\profileschool;
+use App\Models\profileschool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
