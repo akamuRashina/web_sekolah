@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->id();
-            $table->string("title",250);
+            $table->string("title");
             $table->enum("category", ['academic','non academic']);
-            $table->text("description ")->nullable();
+            $table->text("description")->nullable();
             $table->year("year")->nullable();
             $table->string("image",100)->nullable();
             $table->timestamps();
