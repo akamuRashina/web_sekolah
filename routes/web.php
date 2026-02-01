@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\admin\partnercontroller;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,3 +33,10 @@ Route::post('/teachers', [TeacherController::class, 'store']);
 Route::put('/teachers/{id}', [TeacherController::class, 'update']);
 
 require __DIR__.'/admin.php';
+
+
+Route::get('/admin/partner', [partnercontroller::class, 'index'])->name('partner.index');
+Route::get('/admin/partner/{id}/edit', [partnercontroller::class, 'edit'])->name('partner.edit');
+Route::put('/admin/partner/{id}', [partnercontroller::class, 'update'])->name('partner.update');
+Route::delete('/admin/partner/{id}', [partnercontroller::class, 'destroy'])->name('partner.destroy');
+
