@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\App\Models\profile_school;
-use App\Models\profile_school as ModelsProfile_school;
+use App\Models\App\Models\profileschool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,7 +10,7 @@ class ProfileSchoolController extends Controller
 {
     public function index()
     {
-        return ModelsProfile_school::first(); // memang biasanya cuma 1 data
+        return profileschool::first();
     }
 
     public function store(Request $request)
@@ -32,14 +31,14 @@ class ProfileSchoolController extends Controller
                 ->store('principals', 'public');
         }
 
-        ModelsProfile_school::create($data);
+        ProfileSchool::create($data);
 
         return back()->with('success', 'Profil sekolah berhasil disimpan');
     }
 
     public function update(Request $request, $id)
     {
-        $profile = ModelsProfile_school::findOrFail($id);
+        $profile = ProfileSchool::findOrFail($id);
 
         $data = $request->only([
             'school_name',
