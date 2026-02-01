@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\profile_schoolcontroller;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,3 +33,13 @@ Route::post('/teachers', [TeacherController::class, 'store']);
 Route::put('/teachers/{id}', [TeacherController::class, 'update']);
 
 require __DIR__.'/admin.php';
+
+// PROFILE SEKOLAH
+Route::get('/profile-school', [profile_schoolcontroller::class, 'index']);
+Route::post('/profile-school', [profile_schoolcontroller::class, 'store']);
+Route::put('/profile-school/{id}', [profile_schoolcontroller::class, 'update']);
+
+// TEACHER
+Route::get('/teachers', [TeacherController::class, 'index']);
+Route::post('/teachers', [TeacherController::class, 'store']);
+Route::put('/teachers/{id}', [TeacherController::class, 'update']);
