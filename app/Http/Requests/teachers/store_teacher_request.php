@@ -8,16 +8,16 @@ class StoreTeacherRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // nanti bisa dibatasi pakai auth
+        return true;
     }
 
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'nip' => 'nullable|string|max:30|unique:teachers,nip',
+            'name'           => 'required|string|max:255',
+            'nip'            => 'nullable|string|max:30|unique:teachers,nip',
             'school_subject' => 'nullable|string|max:100',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'photo'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 
