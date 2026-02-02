@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\admin\ProfileController;
 
 
 
@@ -23,8 +24,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-/*--routes teacher--*/
 
 
 require __DIR__.'/admin.php';
-
