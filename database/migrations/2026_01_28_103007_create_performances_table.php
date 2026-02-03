@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title",250);
             $table->enum("category", ['academic','non academic']);
-            $table->text("description ")->nullable();
+            $table->string("description")->nullable();
             $table->year("year")->nullable();
             $table->string("image",100)->nullable();
             $table->timestamps();

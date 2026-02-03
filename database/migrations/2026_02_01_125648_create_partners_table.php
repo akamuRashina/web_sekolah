@@ -14,9 +14,9 @@ return new class extends Migration
     Schema::create('partners', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('field');
-        $table->text('address');
-        $table->string('phone');
+        $table->string('field')->nullable();
+        $table->text('address')->nullable();
+        $table->string('phone')->nullable();
         $table->string('email');
         $table->text('description')->nullable();
         $table->enum('status', ['active', 'inactive'])->default('active');

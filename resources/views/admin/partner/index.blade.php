@@ -3,6 +3,7 @@
 @if(session('success'))
     <p style="color:green">{{ session('success') }}</p>
 @endif
+<a href="{{ route('partner.create') }}">tambah data</a>
 
 <table border="1" cellpadding="5">
     <tr>
@@ -13,7 +14,7 @@
         <th>action</th>
     </tr>
 
-    @foreach($partners as $p)
+    @forelse($partners as $p)
     <tr>
         <td>{{ $p->name }}</td>
         <td>{{ $p->field }}</td>
@@ -29,5 +30,7 @@
             </form>
         </td>
     </tr>
-    @endforeach
+    @empty
+    <tr><td colspan=5>data masih kosong</td></tr>
+    @endforelse
 </table>
