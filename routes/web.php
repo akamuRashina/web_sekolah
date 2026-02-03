@@ -34,12 +34,19 @@ Route::put('/teachers/{id}', [TeacherController::class, 'update']);
 
 require __DIR__.'/admin.php';
 
-// PROFILE SEKOLAH
-Route::get('/profile-school', [ProfileSchoolController::class, 'index']);
+// tampilan dashboard (read)
+Route::get('/profile-school', [ProfileSchoolController::class, 'show']);
+
+// form edit / input
+Route::get('/profile-school/edit', [ProfileSchoolController::class, 'index']);
 Route::post('/profile-school', [ProfileSchoolController::class, 'store']);
 Route::put('/profile-school/{id}', [ProfileSchoolController::class, 'update']);
 
-// TEACHER
-Route::get('/teachers', [TeacherController::class, 'index']);
-Route::post('/teachers', [TeacherController::class, 'store']);
-Route::put('/teachers/{id}', [TeacherController::class, 'update']);
+Route::get('/teachers', [TeacherController::class, 'index']);        // list
+Route::get('/teachers/create', [TeacherController::class, 'create']); // form tambah
+Route::post('/teachers', [TeacherController::class, 'store']);        // simpan
+
+Route::get('/teachers/{id}/edit', [TeacherController::class, 'edit']); // form edit
+Route::put('/teachers/{id}', [TeacherController::class, 'update']);    // update
+
+Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']); // delete

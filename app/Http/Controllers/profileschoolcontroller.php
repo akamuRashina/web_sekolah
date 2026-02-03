@@ -11,7 +11,14 @@ class ProfileSchoolController extends Controller
     public function index()
     {
         $profile = ProfileSchool::first();
-        return view('profile_school', compact('profile'));
+        return view('profile_school_form', compact('profile'));
+    }
+
+    // DASHBOARD / TAMPILAN
+    public function show()
+    {
+        $profile = ProfileSchool::first();
+        return view('profile_school_show', compact('profile'));
     }
 
 

@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\teachers\StoreTeacherRequest;
 use App\Models\Teacher;
-use App\Http\Requests\StoreTeacherRequest;
-use App\Http\Requests\UpdateTeacherRequest;
+use App\Http\Requests\teachers\UpdateTeacherRequest;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    // =========================
+    // LIST / DASHBOARD
+    // =========================
     public function index()
     {
-        return Teacher::all();
+        $teachers = Teacher::all();
+        return view('teachers.index', compact('teachers'));
     }
 
+    // =========================
+    // FORM TAMBAH
+    // =========================
+    public function create()
+    {
+        return view('teachers.create');
+    }
+
+    // =========================
+    // SIMPAN (TIDAK DIUBAH)
+    // =========================
     public function store(StoreTeacherRequest $request)
     {
         $data = $request->validated();
@@ -27,6 +42,18 @@ class TeacherController extends Controller
         return back()->with('success', 'Data guru berhasil ditambahkan');
     }
 
+    // =========================
+    // FORM EDIT
+    // =========================
+    public function edit($id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        return view('teachers.edit', compact('teacher'));
+    }
+
+    // =========================
+    // UPDATE (TIDAK DIUBAH)
+    // =========================
     public function update(UpdateTeacherRequest $request, $id)
     {
         $teacher = Teacher::findOrFail($id);
@@ -45,6 +72,9 @@ class TeacherController extends Controller
         return back()->with('success', 'Data guru berhasil diperbarui');
     }
 
+    // =========================
+    // DELETE (TIDAK DIUBAH)
+    // =========================
     public function destroy($id)
     {
         $teacher = Teacher::findOrFail($id);
