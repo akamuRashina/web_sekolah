@@ -15,14 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->unsignedBigInteger('category_id');
             $table->date('upload_date');
             $table->enum('status', ['draf', 'upload'])->default('draf');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
 
-            $table->foreign->('category_id')
-                  ->references->('category_id')
+            $table->foreignId('category_id')
+                  ->references('category_id')
                   ->on('categories')
                   ->onDelete('cascade');
 

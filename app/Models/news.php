@@ -2,22 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class news extends Model
+class News extends Model
 {
+    use HasFactory;
+
+    protected $table = 'news';
     protected $primaryKey = 'news_id';
+
     protected $fillable = [
         'title',
         'content',
         'category_id',
-        'upload_date'
+        'publish_date',
         'status',
         'author_id'
     ];
 
+    public $timestamps = false;
+
     public function category()
-{
-        return $this->beelongsTo(category::class,'category_id');
-}
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

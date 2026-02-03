@@ -3,41 +3,67 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use App\Models\Category;
-use App\Http\Requests\NewsRequest;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    
     public function index()
     {
-        $news = News::with('category')->get();
-        return view('news.index', compact('news'));
+     
+           $news =  News::with('category')->get();
+           return view('admin.news.index', compact ('news'));
+       
     }
 
-    public function create()
+    public function store(Request $request)
     {
-        $categories = Category::all();
-        return view('news.create', compact('categories'));
-    }
-
-    public function store(News $request)
-    {
-        News::create([
-            'title'       => $request->title,
-            'content'     => $request->content,
-            'category_id' => $request->category_id,
-            'upload_date' => date('Y-m-d'),
-            'status'      => $request->status, // Draft / Upload
-            'author_id'   => 1
+        $request->validate([
+            'title'         => 'required|string|max:255',
+            'content'       => 'required',
+            'category_id'   => 'required|exists:categories,category_id',
+            'publish_date'  => 'required|date',
+            'status'        => 'required|in:draft,published',
+            'author_id'     => 'required'
         ]);
 
-        return redirect('/news')->with('success', 'News saved successfully');
+        $news = News::create($request->all());
+
+        return response()->json($news, 201);
+    }
+    public function create()
+{
+    // misal kamu mau mengambil data kategori untuk dropdown
+    $categories = \App\Models\Category::all();
+    return view('admin.news.create', compact('categories'));
+}
+
+    public function show($id)
+    {
+        return response()->json(
+            News::with('category')->findOrFail($id)
+        );
     }
 
-    public function publicNews()
+    public function update(Request $request, $id)
     {
-        $news = News::where('status', 'Upload')->get();
-        return view('news.public', compact('news'));
+        $news = News::findOrFail($id);
+
+        $request->validate([
+            'title'        => 'required|string|max:255',
+            'content'      => 'required',
+            'category_id'  => 'required|exists:categories,category_id',
+            'status'       => 'required|in:draft,published',
+        ]);
+
+        $news->update($request->all());
+
+        return response()->json($news);
+    }
+
+    public function destroy($id)
+    {
+        News::destroy($id);
+
+        return response()->json(['message' => 'News deleted']);
     }
 }
