@@ -10,8 +10,10 @@ class ProfileSchoolController extends Controller
 {
     public function index()
     {
-        return profileschool::first();
+        $profile = ProfileSchool::first();
+        return view('profile_school', compact('profile'));
     }
+
 
     public function store(Request $request)
     {
