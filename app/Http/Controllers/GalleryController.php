@@ -7,57 +7,67 @@ use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    // Ambil semua data galeri
     public function index()
     {
-        return Gallery::all();
+        $gallery = Gallery::all();
+        return view('gallery.index', compact('gallery'));
     }
 
-    // Simpan data galeri
+    public function create()
+    {
+        return view('gallery.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'Judul' => 'required|string',
-            'Foto' => 'required|string',
+            'Judul' => 'required|string|max:255',
+            'Foto' => 'required|image|mimes:jpg,jpeg,png',
             'Keterangan' => 'required|string',
         ]);
 
-        $gallery = Gallery::create([
+        $fotoPath = $request->file('Foto')->store('gallery', 'public');
+
+        Gallery::create([
             'Judul' => $request->Judul,
-            'Foto' => $request->Foto,
+            'Foto' => $fotoPath,
             'Keterangan' => $request->Keterangan,
         ]);
 
-        return response()->json($gallery, 201);
+        return redirect('/gallery');
     }
 
-    // Tampilkan 1 data galeri
-    public function show($id)
+    public function edit($id)
     {
-        return Gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
+        return view('gallery.edit', compact('gallery'));
     }
 
-    // Update data galeri
     public function update(Request $request, $id)
     {
         $gallery = Gallery::findOrFail($id);
 
-        $gallery->update($request->only([
-            'Judul',
-            'Foto',
-            'Keterangan'
-        ]));
+        $request->validate([
+            'Judul' => 'required|string|max:255',
+            'Foto' => 'nullable|image|mimes:jpg,jpeg,png',
+            'Keterangan' => 'required|string',
+        ]);
 
-        return response()->json($gallery);
+        if ($request->hasFile('Foto')) {
+            $fotoPath = $request->file('Foto')->store('gallery', 'public');
+            $gallery->Foto = $fotoPath;
+        }
+
+        $gallery->Judul = $request->Judul;
+        $gallery->Keterangan = $request->Keterangan;
+        $gallery->save();
+
+        return redirect('/gallery');
     }
 
-    // Hapus data galeri
     public function destroy($id)
     {
         Gallery::destroy($id);
-
-        return response()->json([
-            'message' => 'Data galeri berhasil dihapus'
-        ]);
+        return redirect('/gallery');
     }
 }
