@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\extracurricular;
 use App\Http\Requests\extracurricular\storeextracurricularrequest;
-use App\Http\Requests\perforextracurricularmance\updateextracurricularrequest;
+use App\Http\Requests\extracurricular\updateextracurricularrequest;
 
 
 class extracurricularcontroller extends Controller

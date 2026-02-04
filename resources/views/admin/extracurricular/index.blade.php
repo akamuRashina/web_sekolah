@@ -1,40 +1,38 @@
-<!-- resources/views/extracurriculars/index.blade.php -->
-{{-- @extends('layouts.app') --}}
+<h1>Daftar Ekstrakurikuler</h1>
 
-@section('content')
-<div class="container">
-    <h2>Extracurricular List</h2>
-    <a href="{{ route('extracurricular.create') }}" class="btn btn-success mb-3">Add New Extracurricular</a>
+<a href="{{ route('extracurricular.create') }}">+ Tambah Ekskul</a>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Extracurricular Name</th>
-                <th>Description</th>
-                <th>Instructor</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($extracurricular as $extracurricular)
-                <tr>
-                    <td>{{ $extracurricular->extracurricular_name }}</td>
-                    <td>{{ $extracurricular->description }}</td>
-                    <td>{{ $extracurricular->instructor }}</td>
-                    <td>
-                        <a href="{{ route('extracurricular.edit', $extracurricular->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="{{ route('extracurricular.destroy', $extracurricular->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this extracurricular?')">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection
+<table border="1" cellpadding="10" style="margin-top: 20px; border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th>No</th>
+            <th>Nama Ekskul</th>
+            <th>Pembimbing</th>
+            <th>Deskripsi</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($extracurricular as $item)
+        <tr>
+            <td align="center">{{ $loop->iteration }}</td>
+            <td>{{ $item->extracurricular_name }}</td>
+            <td>{{ $item->instructor }}</td>
+            <td>{{ $item->description ?? '-' }}</td>
+            <td align="center">
+                <a href="{{ route('extracurricular.show', $item->id) }}">Detail</a> |
+                <a href="{{ route('extracurricular.edit', $item->id) }}">Edit</a> |
+                <form action="{{ route('extracurricular.destroy', $item->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Hapus data ini?')">Hapus</button>
+                </form>
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="5" align="center">Data masih kosong.</td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>

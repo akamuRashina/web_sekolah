@@ -24,9 +24,9 @@ class updateperformancerequest extends FormRequest
         $performanceid = $this->route('adminperformance');
         return [
            'title' => 'sometimes|required|string|max:250',
-           'category' => 'sometimes|required|in:akademik,non akadeik',
+           'category' => 'sometimes|required|in:academic,non academic',
            'description' => 'sometimes|nullable|string',
-           'year' => 'sometimes|nullable|date',
+           'year' => 'sometimes|nullable|integer',
            'image' => 'sometimes|nullable|image|mimes:png,jpg,jpeg|max:10240',
         ];
     }

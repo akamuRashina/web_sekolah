@@ -21,7 +21,6 @@ class storeextracurricularrequest extends FormRequest
            'extracurricular_name' => 'required|string|max:250',
            'description' => 'nullable|string',
            'instructor' => 'nullable|string',
-           
         ];
         
     }

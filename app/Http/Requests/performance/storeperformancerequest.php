@@ -23,7 +23,7 @@ class storeperformancerequest extends FormRequest
     {
         return [
            'title' => 'required|string|max:250',
-           'category' => 'required|in:academic,non acadeic',
+           'category' => 'required|in:academic,non academic',
            'description' => 'nullable|string',
            'year' => 'nullable|date_format:Y',
            'image' => 'nullable|file|mimes:png,jpg,jpeg|max:10240',
