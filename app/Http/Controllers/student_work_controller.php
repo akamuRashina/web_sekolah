@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\StudentWork;
 use App\Models\Major;
-use Illuminate\Http\Request;
+use Illuminate\Http\Student_work\StudentWorkRequest;
 
 class StudentWorkController extends Controller
 {
     public function index()
     {
         $studentWorks = StudentWork::with('major')->get();
-        return view('student_works.index', compact('studentWorks'));
+        return view('student_work.index', compact('studentWorks'));
     }
 
     // ===== EDIT =====
@@ -20,7 +20,7 @@ class StudentWorkController extends Controller
         $studentWork = StudentWork::findOrFail($id);
         $majors = Major::all();
 
-        return view('student_works.edit', compact('studentWork', 'majors'));
+        return view('student_work.edit', compact('studentWork', 'majors'));
     }
 
     // ===== UPDATE =====
@@ -45,6 +45,6 @@ class StudentWorkController extends Controller
         $studentWork = StudentWork::findOrFail($id);
         $studentWork->delete();
 
-        return redirect('/student-works')->with('success', 'Data berhasil dihapus');
+        return redirect('/student-work')->with('success', 'Data berhasil dihapus');
     }
 }

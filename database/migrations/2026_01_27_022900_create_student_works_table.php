@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title_of_work');
             $table->string('description');
-            $table->string('file_of_work');
-            $table->foreignId('id_major')->constrained()->onDelete('cascade');
+            $table->string('file_of_work')->nullable();
+            $table->foreignId('majors_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

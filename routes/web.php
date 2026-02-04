@@ -1,29 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
+/*
+|--------------------------------------------------------------------------
+| Default Page
+|--------------------------------------------------------------------------
+| Langsung arahkan ke halaman Major
+*/
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('major.index');
 });
-
-/* ===== AUTH ===== */
-Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
-
-/* ===== PROTECTED PAGE ===== */
-Route::middleware('auth')->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    
-
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-});
-
-require __DIR__.'/admin.php';
+/*
+|--------------------------------------------------------------------------
+| Admin Pages
+|--------------------------------------------------------------------------
+*/
+require __DIR__ . '/admin.php';

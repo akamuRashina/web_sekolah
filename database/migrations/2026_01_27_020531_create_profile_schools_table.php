@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('vision');
             $table->string('mission');
             $table->string('history');
+            
+
             $table->timestamps();
         });
     }
