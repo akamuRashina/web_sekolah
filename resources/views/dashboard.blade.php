@@ -1,6 +1,23 @@
-<h1>Welcome, {{ auth()->user()->name }}</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Publik</title>
+</head>
+<body>
 
-<form method="POST" action="/logout">
-    @csrf
-    <button type="submit">Logout</button>
-</form>
+<h1>Dashboard Publik</h1>
+
+@if(session('success'))
+    <p>{{ session('success') }}</p>
+@endif
+
+<a href="{{ route('admin.apply') }}">
+    <button>Ajukan Jadi Admin</button>
+</a>
+
+<a href="{{ route('login') }}">
+    <button>Login Admin</button>
+</a>
+
+</body>
+</html>
