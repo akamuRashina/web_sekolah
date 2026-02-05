@@ -20,11 +20,11 @@
         <br><br>
 
         <label>Category</label><br>
-        <select name="category_id" required>
+        <select name="categories_id" required>
             @foreach ($categories as $category)
-                <option value="{{ $category->category_id }}"
-                    {{ $news->category_id == $category->category_id ? 'selected' : '' }}>
-                    {{ $category->category_name }}
+                <option value="{{ $categories->categories_id }}"
+                    {{ $news->categories_id == $categories->categories_id ? 'selected' : '' }}>
+                    {{ $categories->category_name }}
                 </option>
             @endforeach
         </select>

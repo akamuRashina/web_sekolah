@@ -7,7 +7,7 @@
     <h2>News Detail</h2>
 
     <p><strong>Title:</strong> {{ $news->title }}</p>
-    <p><strong>Category:</strong> {{ $news->category->category_name }}</p>
+    <p><strong>Category:</strong> {{ $news->categories->category_name }}</p>
     <p><strong>Status:</strong> {{ $news->status }}</p>
     <p><strong>Publish Date:</strong> {{ $news->publish_date }}</p>
 

@@ -18,7 +18,7 @@ class storenewsrequest extends FormRequest
         return [
             'title'           => 'required|string|max:255',
             'content'         => 'required|string',
-            'category_id'     => 'required|exists:categories,id',
+            'categories_id'     => 'required|exists:categories,id',
             'upload_date'     => 'required|date',
             'status'          => 'required|in:draft,publish',
             

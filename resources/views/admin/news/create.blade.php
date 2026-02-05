@@ -15,19 +15,19 @@
     <textarea name="content" required></textarea>
 
     <label>Kategori:</label>
-    <select name="category_id">
+    <select name="categories_id">
         @foreach($categories as $category)
-            <option value="{{ $category->category_id }}">{{ $category->name }}</option>
+            <option value="{{ $category->categories_id }}">{{ $category->category_name }}</option>
         @endforeach
     </select>
 
     <label>Tanggal Terbit:</label>
-    <input type="date" name="publish_date" required>
+    <input type="date" name="upload_date" required>
 
     <label>Status:</label>
     <select name="status">
-        <option value="draft">Draft</option>
-        <option value="published">Published</option>
+        <option value="draf">Draft</option>
+        <option value="upload">Published</option>
     </select>
 
     <input type="hidden" name="author_id" value="{{ auth()->id() }}">

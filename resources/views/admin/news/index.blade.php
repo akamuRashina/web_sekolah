@@ -20,7 +20,7 @@
         <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ $item->title }}</td>
-            <td>{{ $item->category->category_name }}</td>
+            <td>{{ $item->categories->category_name }}</td>
             <td>{{ $item->status }}</td>
             <td>{{ $item->publish_date }}</td>
         </tr>

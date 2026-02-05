@@ -22,17 +22,16 @@ class storecategoryrequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        =>'required|string|max:100|unique:categories,name',
-            'description' => 'nullable|string|max:255',
-            'status'      => 'nullable|boolean'
+            'category_name'        =>'required|string|max:100|unique:categories,name',
+            
         ];
     }
     public function messages(): array
     {
         return [
-            'name.required' => 'Nama category wajib diisi',
-            'name.unique'   => 'Nama category sudah ada',
-            'name.max'      => 'Nama category maksimal 100 karakter',
+            'category_name.required' => 'Nama category wajib diisi',
+            'category_name.unique'   => 'Nama category sudah ada',
+            'category_name.max'      => 'Nama category maksimal 100 karakter',
         ];
     }
 }

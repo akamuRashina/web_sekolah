@@ -8,7 +8,7 @@
 
 <h1>Daftar Category</h1>
 
-<a href="{{ route('category.create') }}">+ Tambah Category</a>
+<a href="{{ route('categories.create') }}">+ Tambah Category</a>
 
 <table border="1" cellpadding="10" cellspacing="0">
     <tr>
@@ -20,11 +20,11 @@
     @foreach ($categories as $item)
     <tr>
         <td>{{ $loop->iteration }}</td>
-        <td>{{ $item->name }}</td>
+        <td>{{ $item->category_name }}</td>
         <td>
-            <a href="{{ route('category.edit', $item->id) }}">Edit</a>
+            <a href="{{ route('categories.edit', $item->id) }}">Edit</a>
 
-            <form action="{{ route('category.destroy', $item->id) }}" method="POST" style="display:inline;">
+            <form action="{{ route('categories.destroy', $item->id) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('Yakin hapus?')">Hapus</button>
