@@ -14,6 +14,7 @@
                     <th class="px-6 py-3 text-sm font-semibold text-gray-700">Judul</th>
                     <th class="px-6 py-3 text-sm font-semibold text-gray-700">Kategori</th>
                     <th class="px-6 py-3 text-sm font-semibold text-gray-700 text-center">Tahun</th>
+                    <th class="px-6 py-3 text-sm font-semibold text-gray-700">Deskripsi</th>
                     <th class="px-6 py-3 text-sm font-semibold text-gray-700">Gambar</th>
                     <th class="px-6 py-3 text-sm font-semibold text-gray-700 text-center">Aksi</th>
                 </tr>
@@ -29,6 +30,9 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 text-center">{{ $item->year }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                        {{ Str::limit($item->description, 50) }}
+                    </td>
                     <td class="px-6 py-4">
                         @if($item->image && !str_contains($item->image, 'tmp'))
                             <img src="{{ asset('storage/' . $item->image) }}" class="w-16 h-12 object-cover rounded shadow-sm">
@@ -36,7 +40,7 @@
                             <span class="text-red-500 text-xs italic">Gagal Upload</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 text-center space-x-2">
+                    <td class="px-6 py-4 text-center space-x-2 whitespace-nowrap">
                         <a href="{{ route('performance.show', $item->id) }}" class="text-blue-600 hover:underline">Detail</a>
                         <a href="{{ route('performance.edit', $item->id) }}" class="text-yellow-600 hover:underline">Edit</a>
                         <form action="{{ route('performance.destroy', $item->id) }}" method="POST" class="inline">
@@ -47,7 +51,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-6 py-10 text-center text-gray-500 italic">Data masih kosong.</td>
+                    <td colspan="7" class="px-6 py-10 text-center text-gray-500 italic">Data masih kosong.</td>
                 </tr>
                 @endforelse
             </tbody>
