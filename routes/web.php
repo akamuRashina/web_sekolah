@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminRequestController;
+use App\Http\Controllers\ProfileSchoolController;
+use App\Http\Controllers\TeacherController;
 
 /* ===== PUBLIC (TANPA LOGIN) ===== */
 Route::get('/', function () {
