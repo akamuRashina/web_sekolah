@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Storecategory extends FormRequest
+class storecategoryrequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,22 +22,19 @@ class Storecategory extends FormRequest
     public function rules(): array
     {
         return [
-            'category_name'=> [
-                'required',
-                'string',
-                'max:225',
-        'unique:categories.category_name'
-            ],
+            'name'        =>'required|string|max:100|unique:categories,name',
+            'description' => 'nullable|string|max:255',
+            'status'      => 'nullable|boolean'
         ];
     }
-
-      public function messages(): array
+    public function messages(): array
     {
         return [
-            'category_name.required'=>'Nama kategori tidak boleh kosong.',
-            'category_name.unique'=>'Nama kategori sudah terdaftar.',
-            'category_name.max'=>'Nama kategori maksimal 255 karakter.',
+            'name.required' => 'Nama category wajib diisi',
+            'name.unique'   => 'Nama category sudah ada',
+            'name.max'      => 'Nama category maksimal 100 karakter',
         ];
     }
 }
-  
+
+
