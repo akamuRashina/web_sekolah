@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -15,44 +16,54 @@ class AdminRequestController extends Controller
     }
 
     // simpan pengajuan
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'   => 'required',
-            'email'  => 'required|email',
-            'reason' => 'required'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'reason' => 'required',
+    ]);
 
-        AdminRequest::create($request->only('name','email','reason'));
+    AdminRequest::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'reason' => $request->reason,
+        'permissions' => json_encode($request->permissions ?? [])
+    ]);
 
-        return redirect()->route('dashboard')
-            ->with('success', 'Pengajuan admin berhasil dikirim');
+    return back()->with('success', 'Pengajuan admin terkirim');
+}
+
+
+// list pengajuan (super admin)
+public function index()
+{
+    $requests = AdminRequest::where('status', 'pending')->get();
+
+    return view('admin.requests', compact('requests'));
+}
+
+
+// approve admin request
+public function approve($id)
+{
+    $requestAdmin = AdminRequest::findOrFail($id);
+
+    $user = User::where('email', $requestAdmin->email)->first();
+
+    if ($user) {
+        $user->role = 'admin';
+        $user->permissions = $requestAdmin->permissions; // simpan permission
+        $user->save();
     }
 
-    // list pengajuan (super admin)
-    public function index()
-    {
-        return view('admin.requests', [
-            'requests' => AdminRequest::where('status','pending')->get()
-        ]);
-    }
+    $requestAdmin->delete();
 
-    // approve
-    public function approve($id)
-    {
-        $req = AdminRequest::findOrFail($id);
+    return back()->with('success', 'Admin berhasil di-approve');
+}
 
-        User::create([
-            'name'     => $req->name,
-            'email'    => $req->email,
-            'password' => Hash::make('admin123'),
-            'role'     => 'admin'
-        ]);
 
-        $req->update(['status' => 'approved']);
 
-        return back()->with('success','Admin disetujui');
-    }
 
     // reject
     public function reject($id)
@@ -60,6 +71,6 @@ class AdminRequestController extends Controller
         AdminRequest::findOrFail($id)
             ->update(['status' => 'rejected']);
 
-        return back()->with('error','Pengajuan ditolak');
+        return back()->with('error', 'Pengajuan ditolak');
     }
 }
