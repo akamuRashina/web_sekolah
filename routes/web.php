@@ -11,6 +11,13 @@ use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\ProfileSchoolController;
 use App\Http\Controllers\TeacherController;
 
+Route::get('/', function () {
+    return "hallo dek";
+});
+
+require __DIR__.'/admin.php';
+
+
 
     /* ===== PUBLIC (TANPA LOGIN) ===== */
 
