@@ -25,7 +25,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboardadmin');
+            }
+
+            return redirect()->route('admin.dashboardadmin');
         }
 
         return back()->withErrors([
@@ -74,49 +79,47 @@ class AuthController extends Controller
     }
 
     /* ===== UPDATE PROFILE ===== */
-   public function updateProfile(Request $request)
-{
-    /** @var \App\Models\User $user */
-    $user = Auth::user();
+    public function updateProfile(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-    $request->validate([
-        'name'  => 'required',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'password' => 'nullable|min:6'
-    ]);
+        $request->validate([
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6'
+        ]);
 
-    $data = [
-        'name'  => $request->name,
-        'email' => $request->email,
-    ];
+        $data = [
+            'name'  => $request->name,
+            'email' => $request->email,
+        ];
 
-    if ($request->filled('password')) {
-        $data['password'] = Hash::make($request->password);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return back()->with('success', 'Profile updated successfully');
     }
-
-    $user->update($data);
-
-    return back()->with('success', 'Profile updated successfully');
-}
 
 
     /* ===== DELETE ACCOUNT ===== */
- public function deleteAccount(Request $request)
-{
-    /** @var \App\Models\User $user */
-    $user = Auth::user();
+    public function deleteAccount(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-    Auth::logout();
+        Auth::logout();
 
-    $user->delete();
+        $user->delete();
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    return redirect('/login')->with('success', 'Account deleted successfully');
-}
-
-
+        return redirect('/login')->with('success', 'Account deleted successfully');
+    }
 
     /* ===== LOGOUT ===== */
     public function logout(Request $request)
@@ -125,6 +128,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
