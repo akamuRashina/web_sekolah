@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminRequestController;
 use App\Http\Controllers\ProfileSchoolController;
 use App\Http\Controllers\TeacherController;
 
+
 Route::get('/', function () {
     return "hallo dek";
 });
@@ -42,6 +43,14 @@ Route::get('/teachers/{id}/edit', [TeacherController::class, 'edit']);
 Route::put('/teachers/{id}', [TeacherController::class, 'update']);
 Route::delete('/teachers/{id}', [TeacherController::class, 'destroy']);
     /* ===== PUBLIC (TANPA LOGIN) ===== */
+
+require __DIR__.'/admin.php';
+
+
+// Route::get('/admin/partner', [partnercontroller::class, 'index'])->name('partner.index');
+// Route::get('/admin/partner/{id}/edit', [partnercontroller::class, 'edit'])->name('partner.edit');
+// Route::put('/admin/partner/{id}', [partnercontroller::class, 'update'])->name('partner.update');
+// Route::delete('/admin/partner/{id}', [partnercontroller::class, 'destroy'])->name('partner.destroy');
 
     Route::get('/', function () {
         return view('dashboard'); // dashboard publik
