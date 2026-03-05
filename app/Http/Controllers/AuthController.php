@@ -25,7 +25,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboardadmin');
+            }
+
+            return redirect()->route('admin.dashboardadmin');
         }
 
         return back()->withErrors([
@@ -58,11 +63,62 @@ class AuthController extends Controller
             "Halo {$user->name}, akun kamu berhasil dibuat 🎉",
             function ($message) use ($user) {
                 $message->to($user->email)
-                        ->subject('Registrasi Berhasil');
+                    ->subject('Registrasi Berhasil');
             }
         );
 
         return redirect('/login')->with('success', 'Akun berhasil dibuat, cek email kamu');
+    }
+
+    /* ===== EDIT PROFILE ===== */
+    public function editProfile()
+    {
+        return view('auth.profile', [
+            'user' => Auth::user()
+        ]);
+    }
+
+    /* ===== UPDATE PROFILE ===== */
+    public function updateProfile(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $request->validate([
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6'
+        ]);
+
+        $data = [
+            'name'  => $request->name,
+            'email' => $request->email,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return back()->with('success', 'Profile updated successfully');
+    }
+
+
+    /* ===== DELETE ACCOUNT ===== */
+    public function deleteAccount(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Account deleted successfully');
     }
 
     /* ===== LOGOUT ===== */
@@ -72,6 +128,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
