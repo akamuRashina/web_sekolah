@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('profile_schools', function (Blueprint $table) {
             $table->id();
             $table->string('school_name');
-            $table->string('description');
-            $table->string('address');
+            $table->text('description');
+            $table->text('address');
             $table->string('principal_name');
             $table->string('principal_photo');
-            $table->string('number_of_students');
-            $table->string('vision');
-            $table->string('mission');
-            $table->string('history');
+            $table->integer('number_of_students');
+            $table->text('vision');
+            $table->text('mission');
+            $table->text('history');
             $table->timestamps();
         });
     }
